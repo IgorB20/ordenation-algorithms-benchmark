@@ -4,26 +4,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <time.h>
+#include "ordenation.h"
 
 using namespace std;
-
-void bubbleSort(vector<int> &nums, int size){
-    bool swap;
-
-    do{
-        swap = false;
-        for(int i = 0; i < size-1; i++){
-            if(nums[i] > nums[i+1]){
-                swap = true;
-                int aux = nums[i + 1];
-                nums[i + 1] = nums[i];
-                nums[i] = aux;
-            }
-        }
-
-    }while(swap);
-
-}
 
 int main(int argc, char *argv[])
 {
@@ -33,30 +16,37 @@ int main(int argc, char *argv[])
     unsigned seed = time(0);
     srand(seed);
 
-    int dataAmount = 30000;
+    int dataAmount = 3000000;
 
     vector<int> nums;
 
     for(int i = 0; i<dataAmount; i++){
         nums.push_back(1+rand()%dataAmount);
     }
-/*
+
     cout << "VETOR GERADO: " << endl;
     for(int i = 0; i<nums.size(); i++){
         cout << nums[i] << endl;
-    }*/
-    cout << "Executando bubble sort..." << endl;
+    }
+    cout << endl;
+
+
+    cout << "Executando..." << endl;
     t = clock();
-    bubbleSort(nums, nums.size());
+
+    quickSort(nums, 0, nums.size());
     t = clock() - t;
+
     cout << "DONE" << endl;
     cout << "Tempo de execução: " << (float)t/CLOCKS_PER_SEC << " segundos" << endl;
     cout << "Numero de elementos ordenados: " << dataAmount << endl;
 
-    //cout << "VETOR ORDENADO: " << endl;
-    //for(int i = 0; i<nums.size(); i++){
-        //cout << nums[i] << endl;
-    //}
+    cout << endl;
+
+    cout << "VETOR ORDENADO: " << endl;
+    for(int i = 0; i<nums.size(); i++){
+        cout << nums[i] << endl;
+    }
 
 
     return a.exec();
