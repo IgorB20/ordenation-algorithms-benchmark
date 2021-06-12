@@ -83,56 +83,38 @@ void quickSort(vector<int> &vetor, int began, int end)
         quickSort(vetor, i, end);
 }
 
-
 //código retirado do link: https://pt.wikipedia.org/wiki/Merge_sort
-void merge(vector<int> *saida, vector<int> *auxiliar, int inicio, int meio, int fim){
-    int i, j, k;
-    i = inicio;
-    j = meio + 1;
-    k = inicio;
-    while(i <= meio && j <= fim){
-        if(auxiliar[i] < auxiliar[j]){
-            saida[k] = auxiliar[i];
-            i++;
+void merge(vector<int> &vetor, int ini, int meio, int fim, int vetAux[]) {
+    int esq = ini;
+    int dir = meio;
+    for (int i = ini; i < fim; ++i) {
+        if ((esq < meio) and ((dir >= fim) or (vetor[esq] < vetor[dir]))) {
+            vetAux[i] = vetor[esq];
+            ++esq;
         }
-        else{
-            saida[k] = auxiliar[j];
-            j++;
+        else {
+            vetAux[i] = vetor[dir];
+            ++dir;
         }
-        k++;
     }
-
-    while(i <= meio){
-        saida[k] = auxiliar[i];
-        i++;
-        k++;
-    }
-
-    while(j <= fim){
-        saida[k] = auxiliar[j];
-        j++;
-        k++;
-    }
-    //Copia os elementos que foram ordenados para o auxiliar
-    for(int p = inicio; p <= fim; p++)
-        auxiliar[p] = saida[p];
-}
-
-
-
-void mergeSort(vector<int> *saida, vector<int> *auxiliar, int inicio, int fim){
-    if(inicio < fim){
-        int meio = (inicio + fim) / 2;
-        std::cout << meio << std::endl;
-        mergeSort(saida, auxiliar, inicio, meio);
-        mergeSort(saida, auxiliar, meio + 1, fim);
-        merge(saida, auxiliar, inicio, meio, fim);
+    //copiando o vetor de volta
+    for (int i = ini; i < fim; ++i) {
+        vetor[i] = vetAux[i];
     }
 }
 
-void mergeSort(vector<int> *vetor) { //função que o usuario realmente chama
+void MergeSort(vector<int> &vetor, int inicio, int fim, int vetorAux[]) {
+    if ((fim - inicio) < 2) return;
+
+    int meio = ((inicio + fim)/2);
+    MergeSort(vetor, inicio, meio, vetorAux);
+    MergeSort(vetor, meio, fim, vetorAux);
+    merge(vetor, inicio, meio, fim, vetorAux);
+}
+
+void MergeSort(vector<int> &vetor) { //função que o usuario realmente chama
     //criando vetor auxiliar
-    vector<int> *vetorAux;
-    mergeSort(vetor, vetorAux, 0, vetor->size());
+    int vetorAux[vetor.size()];
+    MergeSort(vetor, 0, vetor.size(), vetorAux);
 }
 

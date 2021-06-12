@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     unsigned seed = time(0);
     srand(seed);
 
-    int dataAmount = 3000000;
+    int dataAmount = 1000;
 
     vector<int> nums;
 
@@ -33,8 +33,7 @@ int main(int argc, char *argv[])
 
     cout << "Executando..." << endl;
     t = clock();
-
-    quickSort(nums, 0, nums.size());
+    MergeSort(nums);
     t = clock() - t;
 
     cout << "DONE" << endl;
